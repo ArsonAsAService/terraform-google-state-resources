@@ -1,0 +1,4 @@
+terraform-docs v0.6.0
+tflint 0.12.1
+terraform 0.12.13
+golang 1.13.4

@@ -1,0 +1,24 @@
+steps:
+  - name: "gcr.io/arson-as-a-service/terraform-testing:0.12.13"
+    id: "Format"
+    args:
+      - "terraform fmt -list -check -recursive ."
+    waitFor:
+      - "-"
+  - name: "gcr.io/arson-as-a-service/terraform-testing:0.12.13"
+    id: Init
+    args:
+      - "terraform init -backend=false"
+    waitFor:
+      - "Format"
+  - name: "gcr.io/arson-as-a-service/terraform-testing:0.12.13"
+    id: "Validate"
+    args:
+      - "terraform validate ."
+    waitFor:
+      - "Init"
+
+options:
+  env:
+    - TF_IN_AUTOMATION=1
+    - TF_CLI_ARGS="-no-color"
